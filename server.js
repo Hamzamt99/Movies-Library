@@ -7,17 +7,48 @@ const cors = require('cors');
 require('dotenv').config();
 
 const file = require('./Movie-Data/data.json');
+
 const axios = require('axios');
+
+const pg = require('pg')
+
+const client = new pg.Client(process.env.DBURL)
 
 const app = express();
 
 app.use(cors())
+app.use(express.json());
+
+
 app.get('/', Data)
 app.get('/favorite', favoritePage)
 app.get('/trending', trendingPage)
 app.get('/search', Search)
 app.get('/rate', ratePage)
 app.get('/Upcoming', UpcomingPage)
+app.get('/getMovies',getMoviePage)
+app.post('/addMovie',handleAddMovie)
+
+
+function getMoviePage(req,res){
+const sql = `select * from add_Movie`;
+client.query(sql).then(db => {
+    res.json(db.rows)
+})
+}
+
+function handleAddMovie(req, res) {
+    const userInput = req.body;
+    const sql = `insert into add_Movie(title, original_language, original_title, overview,comment) values($1, $2, $3, $4,$5) returning *`;
+  
+    const handleValueFromUser = [userInput.title, userInput.original_language, userInput.original_title, userInput.overview,userInput.comment];
+  
+    client.query(sql, handleValueFromUser).then(data => {
+      res.status(201).json(data.rows)
+    })
+  }
+
+
 
 function ratePage(req, res) {
 
@@ -98,6 +129,7 @@ function Error500(err, req, res) {
     }
 
 }
-app.listen(PORT, () => {
-    console.log('test')
+client.connect().then( ()=> {
+
+    app.listen(PORT, () =>  console.log('test'))
 })
