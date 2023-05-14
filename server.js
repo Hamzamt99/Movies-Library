@@ -28,15 +28,35 @@ app.get('/rate', ratePage)
 app.get('/Upcoming', UpcomingPage)
 app.get('/getMovies',getMoviePage)
 app.post('/addMovie',handleAddMovie)
+app.get('/getMovie/:id',getMovieByid)
+app.put('/Update/:id',update)
+app.delete('/Delete/:id',deleted)
 
-
+//get movie from database
 function getMoviePage(req,res){
 const sql = `select * from add_Movie`;
 client.query(sql).then(db => {
     res.json(db.rows)
 })
 }
-
+//delete from database 
+function deleted(req,res){
+const id = req.params.id 
+const sql = `delete from add_Movie where id = ${id}`
+client.query(sql).then(()=>{
+    res.status(204).json('deleted')
+})
+}
+// update the database 
+function update(req,res){
+    const id = req.params.id
+    const sql = `update add_Movie set comment = $1 where id = $2`;
+    const updateComment = [req.body.comment,id]
+    client.query(sql , updateComment).then(data => {
+        res.status(203).json(data.rows)
+    })
+}
+// add movie to database
 function handleAddMovie(req, res) {
     const userInput = req.body;
     const sql = `insert into add_Movie(title, original_language, original_title, overview,comment) values($1, $2, $3, $4,$5) returning *`;
@@ -47,19 +67,26 @@ function handleAddMovie(req, res) {
       res.status(201).json(data.rows)
     })
   }
+  // get movie from database by id
+  function getMovieByid(req,res){
+    const id = req.params.id;
+    const sql = `select * from add_Movie where id = ${id}`;
+    client.query(sql).then(data => {
+        res.status(201).json(data.rows)
+    })
+  }
 
-
-
+// get top rated movies
 function ratePage(req, res) {
 
     axios.get(`${process.env.TURL}?api_key=${process.env.KEY}`).then(movie => res.status(201).json(movie.data))
 
 }
-
+// get the upcoming movies
 function UpcomingPage(req, res) {
     axios.get(`${process.env.UPURL}?api_key=${process.env.KEY}`).then(up => res.status(202).json(up.data))
 }
-
+//see the favorite movie 
 function favoritePage(req, res) {
 
     res.status(201).send('Welcome to Favorite Page')
@@ -71,6 +98,7 @@ app.use(Error500)
 
 const PORT = process.env.PORT || 3002;
 
+// search movie by its name
 async function Search(req, res) {
 
     let movieSearch = req.query.movie;
@@ -82,7 +110,7 @@ async function Search(req, res) {
 }
 
 
-
+// Home pagee
 function Data(req, res) {
 
     res.status(200).send('welcometo home page')
@@ -104,7 +132,7 @@ function trendingPage(req, res) {
 }
 
 const allMovies = [];
-
+// constructor function to reshape the object 
 function Movies(id, title, poster_path, release_date, overview) {
     this.id = id;
     this.title = title;
