@@ -79,12 +79,12 @@ function handleAddMovie(req, res) {
 // get top rated movies
 function ratePage(req, res) {
 
-    axios.get(`${process.env.TURL}?api_key=${process.env.KEY}`).then(movie => res.status(201).json(movie.data))
+    axios.get(`${process.env.URL}movie/top_rated?api_key=${process.env.KEY}`).then(movie => res.status(201).json(movie.data))
 
 }
 // get the upcoming movies
 function UpcomingPage(req, res) {
-    axios.get(`${process.env.UPURL}?api_key=${process.env.KEY}`).then(up => res.status(202).json(up.data))
+    axios.get(`${process.env.URL}movie/upcoming?api_key=${process.env.KEY}`).then(up => res.status(202).json(up.data))
 }
 //see the favorite movie 
 function favoritePage(req, res) {
@@ -103,7 +103,9 @@ async function Search(req, res) {
 
     let movieSearch = req.query.movie;
 
-    let axiosdata = await axios.get(`${process.env.NURL}?api_key=${process.env.KEY}&query=${movieSearch}`)
+    let axiosdata = await axios.get(`${process.env.URL}/search/movie?api_key=${process.env.KEY}&query=${movieSearch}`)
+
+    console.log(`${process.env.URL}/search/movie?api_key=${process.env.KEY}&query=${movieSearch}`)
 
     res.status(200).json(axiosdata.data)
 
@@ -118,7 +120,7 @@ function Data(req, res) {
 
 function trendingPage(req, res) {
 
-    axios.get(`${process.env.URL}?api_key=${process.env.KEY}`).then(result => {
+    axios.get(`${process.env.URL}trending/all/day?api_key=${process.env.KEY}`).then(result => {
 
         const allData = result.data.results
 
