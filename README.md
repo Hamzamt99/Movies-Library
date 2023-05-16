@@ -4,7 +4,7 @@
 
 ## WRRC
 
-![wire-frame](./img/Wrrc.jpg)
+![wire-frame](./img/Untitled (5).jpg)
 
 ## Overview
 
