@@ -4,26 +4,26 @@
 
 ## WRRC
 
-![wire-frame](./img/Wrrc.jpg)
+![wire-frame](./img/wrrc.jpg)
 
 ## Overview
 
 ## Getting Started
 
-- Import the exprees server to our project
+- Deal with sql and postgress
 
--  Import the Cors server to our project
+-  send and get data from database
 
-- Invoke express server to pur Application 
+- deploy our server using Render.com
 
-- Listen to our Application by listen() method 
+- create database table
 
 ## Project Features
 
-- Request and Respond Data from Json File 
+- Deal with database
 
 - Handel 404 Error and 500 Error 
 
 - Functionality 
 
-- constructor to Generate Data 
+-
