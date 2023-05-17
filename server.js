@@ -160,6 +160,5 @@ function Error500(err, req, res) {
 
 }
 client.connect().then( ()=> {
-
-    app.listen(PORT, () =>  console.log(`serever run on${PORT}`))
+    app.listen(PORT, () =>  console.log(`server run on ${PORT}`))
 }).catch(error=> console.log(error))
