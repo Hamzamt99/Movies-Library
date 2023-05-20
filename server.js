@@ -115,11 +115,12 @@ async function Search(req, res) {
 // Home pagee
 function Data(req, res) {
 
-    res.status(200).send('welcometo home page')
+    res.status(200).send('welcome to home page ')
 }
 
 function trendingPage(req, res) {
     Movies.allMovies=[];
+
     axios.get(`${process.env.URL}trending/all/day?api_key=${process.env.KEY}`).then(result => {
 
         const allData = result.data.results
@@ -132,7 +133,6 @@ function trendingPage(req, res) {
     })
 
 }
-
 
 // constructor function to reshape the object 
 function Movies(id, title, poster_path, release_date, overview) {
@@ -162,5 +162,5 @@ function Error500(err, req, res) {
 }
 client.connect().then( ()=> {
 
-    app.listen(PORT, () =>  console.log(`serever run on${PORT}`))
+    app.listen(PORT, () =>  console.log(`serever run on ${PORT}`))
 }).catch(error=> console.log(error))
