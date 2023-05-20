@@ -119,7 +119,7 @@ function Data(req, res) {
 }
 
 function trendingPage(req, res) {
-
+    allMovies = [];
     axios.get(`${process.env.URL}trending/all/day?api_key=${process.env.KEY}`).then(result => {
 
         const allData = result.data.results
