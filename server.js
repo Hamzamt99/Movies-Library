@@ -119,7 +119,7 @@ function Data(req, res) {
 }
 
 function trendingPage(req, res) {
-    allMovies = [];
+    
     axios.get(`${process.env.URL}trending/all/day?api_key=${process.env.KEY}`).then(result => {
 
         const allData = result.data.results
@@ -128,12 +128,12 @@ function trendingPage(req, res) {
 
             new Movies(item.id, item.title, item.poster_path, item.release_date, item.overview)
         )
-        res.status(201).json(allMovies)
+        res.status(201).json(Movies.allMovies)
     })
 
 }
 
-const allMovies = [];
+
 // constructor function to reshape the object 
 function Movies(id, title, poster_path, release_date, overview) {
     this.id = id;
@@ -141,8 +141,9 @@ function Movies(id, title, poster_path, release_date, overview) {
     this.poster_path = poster_path;
     this.release_date = release_date;
     this.overview = overview;
-    allMovies.push(this)
+    Movies.allMovies.push(this)
 }
+Movies.allMovies = [];
 
 function notFoundPage(req, res) {
     res.status(404).json({
