@@ -115,7 +115,7 @@ async function Search(req, res) {
 // Home pagee
 function Data(req, res) {
 
-    res.status(200).send('welcometo home page')
+    res.status(200).send('welcome to home page ')
 }
 
 function trendingPage(req, res) {
