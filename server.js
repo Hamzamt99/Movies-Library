@@ -119,7 +119,9 @@ function Data(req, res) {
 }
 
 function trendingPage(req, res) {
+
     Movies.allMovies=[];
+    
     axios.get(`${process.env.URL}trending/all/day?api_key=${process.env.KEY}`).then(result => {
 
         const allData = result.data.results
@@ -132,6 +134,7 @@ function trendingPage(req, res) {
     })
 
 }
+
 
 // constructor function to reshape the object 
 function Movies(id, title, poster_path, release_date, overview) {
