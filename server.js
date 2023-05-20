@@ -144,6 +144,7 @@ function Movies(id, title, poster_path, release_date, overview) {
     Movies.allMovies.push(this)
 }
 
+
 function notFoundPage(req, res) {
     res.status(404).json({
         code: 404,
