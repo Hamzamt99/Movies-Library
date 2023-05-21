@@ -61,7 +61,7 @@ function handleAddMovie(req, res) {
     const userInput = req.body;
     const sql = `insert into add_Movie(title, original_language, original_title, overview,comment) values($1, $2, $3, $4,$5) returning *`;
   
-    const handleValueFromUser = [userInput.title, userInput.original_language, userInput.original_title, userInput.overview,userInput.comment];
+    const handleValueFromUser = [userInput.title, userInput.original_language, userInput.original_title,userInput.poster_path, userInput.overview,userInput.comment];
   
     client.query(sql, handleValueFromUser).then(data => {
       res.status(201).json(data.rows)
